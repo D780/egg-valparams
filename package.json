@@ -1,0 +1,55 @@
+{
+    "name": "egg-valparams",
+    "version": "1.0.0",
+    "description": "web 参数验证工具 For egg",
+    "eggPlugin": {
+        "name": "valparams"
+    },
+    "main": "index.js",
+    "keywords": [
+        "egg",
+        "eggPlugin",
+        "egg-plugin",
+        "valparams",
+        "parameter",
+        "validator",
+        "express"
+    ],
+    "dependencies": {
+        "valparams": "^3.8.3"
+    },
+    "devDependencies": {
+        "autod": "^3.0.1",
+        "egg": "^1.15.2",
+        "egg-bin": "^4.8.1",
+        "egg-ci": "^1.8.0",
+        "egg-mock": "^3.18.0",
+        "eslint": "^5.2.0",
+        "eslint-config-egg": "^7.0.0"
+    },
+    "engines": {
+        "node": ">=6.0.0"
+    },
+    "scripts": {
+        "test": "npm run lint -- --fix && npm run test-local",
+        "test-local": "egg-bin test",
+        "cov": "egg-bin cov",
+        "lint": "eslint .",
+        "ci": "npm run lint && npm run cov",
+        "autod": "autod"
+    },
+    "ci": {
+        "version": "6, 8, 10",
+        "license": true
+    },
+    "author": "D780",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/D780/egg-valparams.git"
+    },
+    "bugs": {
+        "url": "https://github.com/D780/egg-valparams/issues"
+    },
+    "homepage": "https://github.com/D780/egg-valparams"
+}
