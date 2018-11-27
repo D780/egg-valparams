@@ -1,9 +1,25 @@
 # egg-valparams
 web参数验证工具 For egg
 
-[![NPM](https://nodei.co/npm/egg-valparams.png?downloads=true)](https://nodei.co/npm/egg-valparams/)  
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+[![Test coverage][codecov-image]][codecov-url]
+[![David deps][david-image]][david-url]
+[![Known Vulnerabilities][snyk-image]][snyk-url]
+[![npm download][download-image]][download-url]
 
-[![NPM version](https://img.shields.io/npm/v/egg-valparams.svg?style=flat-square)](https://npmjs.com/package/egg-valparams)
+[npm-image]: https://img.shields.io/npm/v/egg-valparams.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/egg-valparams
+[travis-image]: https://img.shields.io/travis/D780/egg-valparams.svg?style=flat-square
+[travis-url]: https://travis-ci.org/D780/egg-valparams
+[codecov-image]: https://codecov.io/gh/D780/egg-valparams/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/D780/egg-valparams
+[david-image]: https://img.shields.io/david/D780/egg-valparams.svg?style=flat-square
+[david-url]: https://david-dm.org/D780/egg-valparams
+[snyk-image]: https://snyk.io/test/npm/egg-valparams/badge.svg?style=flat-square
+[snyk-url]: https://snyk.io/test/npm/egg-valparams
+[download-image]: https://img.shields.io/npm/dm/egg-valparams.svg?style=flat-square
+[download-url]: https://npmjs.org/package/egg-valparams
 
 查看 [valparams](https://github.com/D780/valparams) 获取具体的参数定义.
 
