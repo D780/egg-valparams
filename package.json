@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "autod": "^3.0.1",
-        "egg": "^1.15.2",
+        "egg": "^2.2.0",
         "egg-bin": "^4.8.1",
         "egg-ci": "^1.8.0",
         "egg-mock": "^3.18.0",

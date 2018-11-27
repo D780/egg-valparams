@@ -1,12 +1,15 @@
 'use strict';
 
-// 这里会早于 app 加载，所以这里无法使用全局变量
-
 module.exports = () => {
   const config = {};
 
+  config.security = {
+    ctoken: false,
+    csrf  : false
+  };
+
   config.valparams = {
-    // locale: 'zh-cn'
+    locale: 'zh-cn'
   };
 
   return config;

@@ -3,11 +3,11 @@
 const mm     = require('egg-mock');
 const assert = require('assert');
 
-describe('test/valparams.test.js', () => {
+describe('test/valparams.locale.test.js', () => {
   let app;
   before(() => {
     app = mm.app({
-      baseDir: 'valparams'
+      baseDir: 'valparams-locale'
     });
     return app.ready();
   });
@@ -24,8 +24,8 @@ describe('test/valparams.test.js', () => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
           assert.deepEqual(res.body.errors, [
-            {key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证 is required']},
-            {key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳 is required']}
+            {key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证不能为空']},
+            {key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳不能为空']}
           ]);
         });
     });
@@ -43,8 +43,8 @@ describe('test/valparams.test.js', () => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
           assert.deepEqual(res.body.errors, [
-            {key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证 is required']},
-            {key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳 is required']}
+            {key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证不能为空']},
+            {key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳不能为空']}
           ]);
         });
     });
@@ -64,7 +64,7 @@ describe('test/valparams.test.js', () => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
           assert.deepEqual(res.body.errors, [
-            {key: 'ts', desc: '请求时间戳', type: 'int', value: 'testtest', err: ['请求时间戳\'s `testtest` is not `int`']}
+            {key: 'ts', desc: '请求时间戳', type: 'int', value: 'testtest', err: ['请求时间戳 的值 `testtest` 的类型不是 `int`']}
           ]);
         });
     });

@@ -9,7 +9,5 @@ const Valparams = require('valparams');
  */
 module.exports = async (app) => {
   app.Valparams = Valparams;
-  if (app.config.valparams.locale) {
-    app.Valparams.locale(app.config.valparams.locale);
-  }
+  app.Valparams.locale(app.config.valparams.locale || 'en');
 };
