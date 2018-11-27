@@ -5,7 +5,7 @@ web参数验证工具 For egg
 
 [![NPM version](https://img.shields.io/npm/v/egg-valparams.svg?style=flat-square)](https://npmjs.com/package/egg-valparams)
 
-查看 [valparams](https://github.com/D780/egg-valparams) 获取具体的参数定义.
+查看 [valparams](https://github.com/D780/valparams) 获取具体的参数定义.
 
 ## Install
 ```npm i egg-valparams --save```

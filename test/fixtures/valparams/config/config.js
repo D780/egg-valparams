@@ -2,5 +2,5 @@
 
 exports.security = {
   ctoken: false,
-  csrf: false,
+  csrf: false
 };

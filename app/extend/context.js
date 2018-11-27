@@ -16,12 +16,12 @@ module.exports = {
  */
 function validate(rules, data) {
   data = data || {
-      params: this.params,
-      query : this.request.query,
-      body  : this.request.body
-    };
+    params: this.params,
+    query : this.request.query,
+    body  : this.request.body
+  };
   if (rules) {
-    let validater = this.app.Valparams.setParams(data, rules);
+    const validater = this.app.Valparams.setParams(data, rules);
     // {
     //   sysID : {alias: 'sid', type: 'int', required: true, desc: '所属系统id'},
     //   page  : {type: 'int', required: false, default: 1, range: {min: 0} desc: '页码'},

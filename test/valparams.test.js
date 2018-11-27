@@ -70,7 +70,7 @@ describe('test/valparams.test.js', () => {
     });
 
     it('should pass and system use default value', () => {
-      let now = Date.now();
+      const now = Date.now();
       return app.httpRequest()
         .get('/users.json')
         .type('json')
@@ -89,7 +89,7 @@ describe('test/valparams.test.js', () => {
     });
 
     it('should pass without use validate and have nochange with params', () => {
-      let now = Date.now();
+      const now = Date.now();
       return app.httpRequest()
         .get('/test.json')
         .type('json')

@@ -1,3 +1,55 @@
 {
-  "extends": "eslint-config-egg"
+    "extends": "eslint-config-egg",
+    "rules": {
+        "arrow-parens": [
+            "error",
+            "always"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "never"
+        ],
+        "array-bracket-spacing": [
+            "error",
+            "never",
+            {
+                "singleValue": false,
+                "objectsInArrays": false,
+                "arraysInArrays": false
+            }
+        ],
+        "key-spacing": [
+            0,
+            {
+                "beforeColon": false,
+                "afterColon": false
+            }
+        ],
+        "no-multi-spaces": [
+            0
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "brace-style": [
+            "error",
+            "stroustrup",
+            {
+                "allowSingleLine": true
+            }
+        ],
+        "indent": [
+            "error",
+            2,
+            {
+                "SwitchCase": 1,
+                "VariableDeclarator": {
+                    "var": 2,
+                    "let": 2,
+                    "const": 3
+                }
+            }
+        ]
+    }
 }
