@@ -30,10 +30,15 @@ function validate(rules, data) {
     // }
     // );
     if (validater.err && validater.err.length) {
-      this.throw(422, 'Validation Failed', {
-        code  : 'invalid_param',
-        errors: validater.err
-      });
+      if (this.app.config.valparams.throwError) {
+        this.throw(422, 'Validation Failed', {
+          code  : 'invalid_param',
+          errors: validater.err
+        });
+      }
+      else {
+        this.paramErrors = validater.err;
+      }
     }
     else {
       // pass

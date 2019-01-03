@@ -50,6 +50,7 @@
                     "const": 3
                 }
             }
-        ]
+        ],
+        "no-else-return": "off"
     }
 }

@@ -32,10 +32,18 @@ web参数验证工具 For egg
 
 ```js
 // config/plugin.js
-exports.validate = {
-  enable: true,
-  package: 'egg-valparams',
+exports.valparams = {
+  enable : true,
+  package: 'egg-valparams'
 };
+```
+
+```js
+// config/config.default.js
+exports.valparams = {
+    locale    : 'zh-cn',
+    throwError: false
+  };
 ```
 
 ### The basic usage
@@ -49,6 +57,10 @@ class XXXController extends app.Controller {
       token   : {type: 'string', required: true, desc: 'token 验证'},
       redirect: {type: 'string', required: false, desc: '登录跳转'}
     });
+    // if (config.throwError === false)
+    if(ctx.paramErrors) {
+      // get error infos from `ctx.paramErrors`;
+    }
     let params = ctx.params;
     let {query, body} = ctx.request;
     // ctx.params        = validater.ret.params;
