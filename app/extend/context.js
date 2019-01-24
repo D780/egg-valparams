@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 module.exports = {
   validate
 };
@@ -32,6 +34,7 @@ function validate(rules, options, data) {
     query : this.request.query,
     body  : this.request.body
   };
+  data.method = this.method || 'GET';
   if (rules) {
     const validater = this.app.Valparams.setParams(data, rules, options);
     // {
@@ -57,6 +60,7 @@ function validate(rules, options, data) {
       this.params        = validater.ret.params;
       this.request.query = validater.ret.query;
       this.request.body  = validater.ret.body;
+      _.assign(this.request.query, validater.ret.query);
     }
   }
 }
