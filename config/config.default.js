@@ -7,7 +7,7 @@ module.exports = () => {
 
   config.valparams = {
     // locale: 'zh-cn',
-    throwError: true
+    throwError: true,
   };
 
   return config;

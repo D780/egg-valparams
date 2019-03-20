@@ -5,11 +5,11 @@ module.exports = () => {
 
   config.security = {
     ctoken: false,
-    csrf  : false
+    csrf  : false,
   };
 
   config.valparams = {
-    locale: 'zh-cn'
+    locale: 'zh-cn',
   };
 
   return config;

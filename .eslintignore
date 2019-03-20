@@ -1,2 +1,6 @@
-test/fixtures
-coverage
+logs/
+node_modules/
+coverage/
+.idea/
+run/
+**/test*.js

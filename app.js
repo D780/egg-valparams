@@ -5,9 +5,9 @@ const Valparams = require('valparams');
 /**
  * app entry
  * @param {Object} app app entry
- * @return {Promise.<void>} <void>
+ * @returns {Promise.<void>} <void>
  */
-module.exports = async (app) => {
+module.exports = async app => {
   app.Valparams = Valparams;
   app.Valparams.locale(app.config.valparams.locale || 'en');
 };

@@ -5,7 +5,7 @@ module.exports = () => {
 
   config.security = {
     ctoken: false,
-    csrf  : false
+    csrf  : false,
   };
 
   config.valparams = {};

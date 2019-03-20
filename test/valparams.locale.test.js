@@ -7,7 +7,7 @@ describe('test/valparams.locale.test.js', () => {
   let app;
   before(() => {
     app = mm.app({
-      baseDir: 'valparams-locale'
+      baseDir: 'valparams-locale',
     });
     return app.ready();
   });
@@ -20,12 +20,12 @@ describe('test/valparams.locale.test.js', () => {
         .get('/users.json')
         .type('json')
         .expect(422)
-        .expect((res) => {
+        .expect(res => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
           assert.deepEqual(res.body.errors, [
-            {key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证不能为空']},
-            {key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳不能为空']}
+            { key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证不能为空'] },
+            { key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳不能为空'] },
           ]);
         });
     });
@@ -36,15 +36,15 @@ describe('test/valparams.locale.test.js', () => {
         .type('json')
         .send({
           system  : 'admin',
-          redirect: 'http://github.com'
+          redirect: 'http://github.com',
         })
         .expect(422)
-        .expect((res) => {
+        .expect(res => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
           assert.deepEqual(res.body.errors, [
-            {key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证不能为空']},
-            {key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳不能为空']}
+            { key: 'token', desc: 'token 验证', type: 'string', err: ['token 验证不能为空'] },
+            { key: 'ts', desc: '请求时间戳', type: 'int', err: ['请求时间戳不能为空'] },
           ]);
         });
     });
@@ -57,14 +57,14 @@ describe('test/valparams.locale.test.js', () => {
           system  : 'admin',
           token   : 'tokentokentokentokentoken',
           redirect: 'http://github.com',
-          ts      : 'testtest'
+          ts      : 'testtest',
         })
         .expect(422)
-        .expect((res) => {
+        .expect(res => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
           assert.deepEqual(res.body.errors, [
-            {key: 'ts', desc: '请求时间戳', type: 'int', value: 'testtest', err: ['请求时间戳 的值 `testtest` 的类型不是 `int`']}
+            { key: 'ts', desc: '请求时间戳', type: 'int', value: 'testtest', err: ['请求时间戳 的值 `testtest` 的类型不是 `int`'] },
           ]);
         });
     });
@@ -77,13 +77,13 @@ describe('test/valparams.locale.test.js', () => {
         .send({
           token   : 'tokentokentokentokentoken',
           redirect: 'http://github.com',
-          ts      : now + ''
+          ts      : `${now}`,
         })
         .expect({
           system  : 'account',
           token   : 'tokentokentokentokentoken',
           redirect: 'http://github.com',
-          ts      : now
+          ts      : now,
         })
         .expect(200);
     });
@@ -96,12 +96,12 @@ describe('test/valparams.locale.test.js', () => {
         .send({
           token   : 'tokentokentokentokentoken',
           redirect: 'http://github.com',
-          ts      : now + ''
+          ts      : `${now}`,
         })
         .expect({
           token   : 'tokentokentokentokentoken',
           redirect: 'http://github.com',
-          ts      : now + ''
+          ts      : `${now}`,
         })
         .expect(200);
     });

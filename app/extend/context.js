@@ -3,7 +3,7 @@
 const _ = require('lodash');
 
 module.exports = {
-  validate
+  validate,
 };
 
 /**
@@ -29,10 +29,10 @@ module.exports = {
  */
 function validate(rules, options, data) {
   options = options || {};
-  data    = data || {
+  data = data || {
     params: this.params,
     query : this.request.query,
-    body  : this.request.body
+    body  : this.request.body,
   };
   data.method = this.method || 'GET';
   if (rules) {
@@ -48,18 +48,16 @@ function validate(rules, options, data) {
       if (this.app.config.valparams.throwError) {
         this.throw(422, 'Validation Failed', {
           code  : 'invalid_param',
-          errors: validater.err
+          errors: validater.err,
         });
-      }
-      else {
+      } else {
         this.paramErrors = validater.err;
       }
-    }
-    else {
+    } else {
       // pass
-      this.params        = validater.ret.params;
+      this.params = validater.ret.params;
       this.request.query = validater.ret.query;
-      this.request.body  = validater.ret.body;
+      this.request.body = validater.ret.body;
       _.assign(this.request.query, validater.ret.query);
     }
   }
