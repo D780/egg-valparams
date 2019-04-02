@@ -46,7 +46,7 @@ function validate(rules, options, data) {
     // );
     if (validater.err && validater.err.length) {
       if (this.app.config.valparams.throwError) {
-        this.throw(422, 'Validation Failed', {
+        this.throw(400, 'Validation Failed', {
           code  : 'invalid_param',
           errors: validater.err,
         });
