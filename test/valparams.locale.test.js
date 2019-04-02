@@ -19,7 +19,7 @@ describe('test/valparams.locale.test.js', () => {
       return app.httpRequest()
         .get('/users.json')
         .type('json')
-        .expect(422)
+        .expect(400)
         .expect(res => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
@@ -38,7 +38,7 @@ describe('test/valparams.locale.test.js', () => {
           system  : 'admin',
           redirect: 'http://github.com',
         })
-        .expect(422)
+        .expect(400)
         .expect(res => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
@@ -59,7 +59,7 @@ describe('test/valparams.locale.test.js', () => {
           redirect: 'http://github.com',
           ts      : 'testtest',
         })
-        .expect(422)
+        .expect(400)
         .expect(res => {
           assert(res.body.code === 'invalid_param');
           assert(res.body.message === 'Validation Failed');
