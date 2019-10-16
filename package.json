@@ -1,6 +1,6 @@
 {
     "name": "egg-valparams",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "description": "web 参数验证工具 For egg",
     "eggPlugin": {
         "name": "valparams"
@@ -13,6 +13,7 @@
         "valparams",
         "parameter",
         "validator",
+        "validate",
         "express"
     ],
     "dependencies": {
@@ -39,7 +40,7 @@
         "autod": "autod"
     },
     "ci": {
-        "version": "6, 8, 10",
+        "version": "8, 10",
         "license": true
     },
     "author": "D780",
@@ -51,5 +52,12 @@
     "bugs": {
         "url": "https://github.com/D780/egg-valparams/issues"
     },
+    "files": [
+        "app",
+        "config",
+        "agent.js",
+        "app.js",
+        "index.d.ts"
+    ],
     "homepage": "https://github.com/D780/egg-valparams"
 }
