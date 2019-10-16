@@ -1,5 +1,13 @@
 {
     "extends": "eslint-config-egg",
+    "globals": {
+        "Promise": true,
+        "fs": true,
+        "_": true,
+        "NonError": true,
+        "Sequelzie": true,
+        "Op": true
+    },
     "rules": {
         "no-console": "error",
         "no-constant-condition": "warn",
@@ -20,6 +28,9 @@
             "requireReturnDescription": false,
             "requireParamDescription": false
         }],
+        "jsdoc/require-param-description" :0,
+        "jsdoc/check-param-names" :0,
+        "jsdoc/check-tag-names" :0,
         "valid-typeof": ["error", {
             "requireStringLiterals": true
         }],

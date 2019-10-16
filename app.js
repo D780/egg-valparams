@@ -4,8 +4,7 @@ const Valparams = require('valparams');
 
 /**
  * app entry
- * @param {Object} app app entry
- * @returns {Promise.<void>} <void>
+ * @param {Egg.Application} app app entry
  */
 module.exports = async app => {
   app.Valparams = Valparams;

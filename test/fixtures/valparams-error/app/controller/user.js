@@ -2,6 +2,10 @@
 
 const _ = require('lodash');
 
+/**
+ * @param {Egg.Application} app
+ * @returns {Egg.Controller}
+ */
 module.exports = app => {
   class userController extends app.Controller {
     // constructor(ctx) {
