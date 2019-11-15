@@ -14,7 +14,7 @@ declare module 'egg' {
      * rules 和 options 查阅 valparams 相关文档说明
      *
      * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
-     *                defValue, trim:boolean, allowEmptyStr:boolean, desc:string}>} rules 参数配置  {@link ParamsConfig}
+     *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} rules 参数配置  {@link ParamsConfig}
      * @param {Object}  options 参数之间关系配置
      * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
      * @param {string[]} options.choices[].fields 涉及的参数
@@ -40,7 +40,8 @@ declare module 'egg' {
      * @param {Object} [data.body]   body 参数
      * @this Egg.Context
      */
-    validate(rules: _Valparams.TParamConfig, options: _Valparams.TRelationOptions, data: { params?: any, query?: any, body?: any }): void
+    validate(rules: _Valparams.TParamConfig, options: _Valparams.TRelationOptions, data: { params?: any, query?: any, body?: any }): void;
+    paramErrors: _Valparams.TErrorInfo[];
   }
 
   // 扩展你的配置

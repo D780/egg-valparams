@@ -21,7 +21,8 @@ module.exports = {
  * @property {Object}  [range.schema] jsonSchema，针对JSON类型参数有效，使用ajv对参数进行格式控制
  * @property {*}       [defValue] 默认值，没传参数或参数验证出错时生效，此时会将该值赋值到相应参数上
  * @property {boolean} [trim]          是否去掉参数前后空格字符，默认false
- * @property {boolean} [allowEmptyStr] 是否允许空串变量 默认不允许， 即 XXXX?YYY= 这种路由 YYY这个参数是否接受，默
+ * @property {boolean} [allowEmptyStr] 是否允许空串变量 默认不允许， 即 XXXX?YYY= 这种路由 YYY这个参数是否接受
+ * @property {boolean} [allowNull] 是否允许 Null 值变量 默认不允许，开启时 传递 x=null 或 x='null' 时，可以跳过类型检查，将 null 值直接赋予 x 参数
  * @property {string}  [desc] 参数描述 用于出错返回的提示
  */
 
@@ -31,7 +32,7 @@ module.exports = {
  * rules 和 options 查阅 valparams 相关文档说明
  *
  * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
- *                defValue, trim:boolean, allowEmptyStr:boolean, desc:string}>} rules 参数配置  {@link ParamsConfig}
+ *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} rules 参数配置  {@link ParamsConfig}
  * @param {Object}  options 参数之间关系配置
  * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
  * @param {string[]} options.choices[].fields 涉及的参数
@@ -68,11 +69,13 @@ function validate(rules, options, data) {
   };
   data.method = this.method || 'GET';
   if (rules) {
-    // 如果全局配置 allowEmptyStr，则对所有定义的参数加上 allowEmptyStr 属性
+    // 如果全局配置 allowEmptyStr，则对所有没有配置 allowEmptyStr 的参数加上 allowEmptyStr 属性
     if (!_.isUndefined(config.allowEmptyStr)) {
       const allowEmptyStr = Boolean(config.allowEmptyStr);
       _.map(rules, rule => {
-        rule.allowEmptyStr = allowEmptyStr;
+        if (_.isUndefined(rule.allowEmptyStr)) {
+          rule.allowEmptyStr = allowEmptyStr;
+        }
       });
     }
     const validater = app.Valparams.setParams(data, rules, options);
