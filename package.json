@@ -1,63 +1,63 @@
 {
-    "name": "egg-valparams",
-    "version": "1.2.8",
-    "description": "web 参数验证工具 For egg",
-    "eggPlugin": {
-        "name": "valparams"
-    },
-    "main": "index.js",
-    "keywords": [
-        "egg",
-        "eggPlugin",
-        "egg-plugin",
-        "valparams",
-        "parameter",
-        "validator",
-        "validate",
-        "express"
-    ],
-    "dependencies": {
-        "valparams": "^3.9.0"
-    },
-    "devDependencies": {
-        "autod": "^3.1.0",
-        "egg": "^2.24.0",
-        "egg-bin": "^4.14.0",
-        "egg-ci": "^1.13.0",
-        "egg-mock": "^3.24.1",
-        "eslint": "^5.2.0",
-        "eslint-config-egg": "^7.5.1"
-    },
-    "engines": {
-        "node": ">=6.0.0"
-    },
-    "scripts": {
-        "test": "npm run lint -- --fix && npm run test-local",
-        "test-local": "egg-bin test",
-        "cov": "egg-bin cov",
-        "lint": "eslint .",
-        "ci": "npm run lint && npm run cov",
-        "autod": "autod"
-    },
-    "ci": {
-        "version": "8, 10",
-        "license": true
-    },
-    "author": "D780",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/D780/egg-valparams.git"
-    },
-    "bugs": {
-        "url": "https://github.com/D780/egg-valparams/issues"
-    },
-    "files": [
-        "app",
-        "config",
-        "agent.js",
-        "app.js",
-        "index.d.ts"
-    ],
-    "homepage": "https://github.com/D780/egg-valparams"
+  "name": "egg-valparams",
+  "version": "1.2.8",
+  "description": "web 参数验证工具 For egg",
+  "eggPlugin": {
+    "name": "valparams"
+  },
+  "main": "index.js",
+  "keywords": [
+    "egg",
+    "eggPlugin",
+    "egg-plugin",
+    "valparams",
+    "parameter",
+    "validator",
+    "validate",
+    "express"
+  ],
+  "dependencies": {
+    "valparams": "^3.11.0"
+  },
+  "devDependencies": {
+    "autod": "^3.1.0",
+    "egg": "^2.24.0",
+    "egg-bin": "^4.14.0",
+    "egg-ci": "^1.13.0",
+    "egg-mock": "^3.24.1",
+    "eslint": "^5.2.0",
+    "eslint-config-egg": "^7.5.1"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "8, 10",
+    "license": true
+  },
+  "author": "D780",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/D780/egg-valparams.git"
+  },
+  "bugs": {
+    "url": "https://github.com/D780/egg-valparams/issues"
+  },
+  "files": [
+    "app",
+    "config",
+    "agent.js",
+    "app.js",
+    "index.d.ts"
+  ],
+  "homepage": "https://github.com/D780/egg-valparams"
 }
