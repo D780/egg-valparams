@@ -7,8 +7,10 @@ module.exports = () => {
 
   config.valparams = {
     // locale: 'zh-cn',
-    throwError   : true,
-    allowEmptyStr: false,
+    cover         : true,
+    allowMultiCall: true,
+    throwError    : true,
+    allowEmptyStr : false,
   };
 
   return config;

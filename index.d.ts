@@ -49,6 +49,10 @@ declare module 'egg' {
     valparams: {
       /** 指定语言，默认 `en`， 自带 `en`、`zh-cn` */
       locale: string
+      /** 是否覆盖上下文中对应字段 */
+      cover: boolean
+      /** 是否允许多次调用验证（允许时，多次调用方法验证会合并结果） */
+      allowMultiCall: boolean
       /** 验证到参数有误时，是否使用 `throw` 抛出错误，否则将错误信息放置于 `ctx.paramErrors` 中 */
       throwError: boolean
       /** 

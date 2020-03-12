@@ -3,6 +3,11 @@
 
 const _ = require('lodash');
 
+// 源参数数据
+const ORIPARAMETERS = Symbol('Context#OriParameters');
+// 验证后参数数据
+const VALPARAMETERS = Symbol('Context#ValParameters');
+
 module.exports = {
   validate,
 };
@@ -56,18 +61,28 @@ module.exports = {
  * @param {Object} [data.params] params 参数
  * @param {Object} [data.query]  query 参数
  * @param {Object} [data.body]   body 参数
+ *
+ * @returns {Object} { err, ret: { params, query, body } }
+ *
  * @this Egg.Context
  */
 function validate(rules, options, data) {
   const app = this.app;
   const config = app.config.valparams;
   options = options || {};
+  if (_.isUndefined(this[ORIPARAMETERS])) {
+    this[ORIPARAMETERS] = {
+      params: this.params,
+      query : this.request.query,
+      body  : this.request.body,
+    };
+  }
   data = data || {
-    params: this.params,
-    query : this.request.query,
-    body  : this.request.body,
+    params: this[ORIPARAMETERS].params,
+    query : this[ORIPARAMETERS].query,
+    body  : this[ORIPARAMETERS].body,
   };
-  data.method = this.method || 'GET';
+  // data.method = this.method || 'GET';
   if (rules) {
     // 如果全局配置 allowEmptyStr，则对所有没有配置 allowEmptyStr 的参数加上 allowEmptyStr 属性
     if (!_.isUndefined(config.allowEmptyStr)) {
@@ -97,10 +112,30 @@ function validate(rules, options, data) {
       }
     } else {
       // pass
-      this.params = validater.ret.params;
-      this.request.query = validater.ret.query;
-      this.request.body = validater.ret.body;
-      _.assign(this.request.query, validater.ret.query);
+      if (_.isUndefined(this[VALPARAMETERS])) {
+        this[VALPARAMETERS] = {
+          params: {},
+          query : {},
+          body  : {},
+        };
+      }
+      if (config.allowMultiCall) {
+        _.assign(this[VALPARAMETERS].params, validater.ret.params);
+        _.assign(this[VALPARAMETERS].query, validater.ret.query);
+        _.assign(this[VALPARAMETERS].body, validater.ret.body);
+      } else {
+        this[VALPARAMETERS].params = validater.ret.params;
+        this[VALPARAMETERS].query = validater.ret.query;
+        this[VALPARAMETERS].body = validater.ret.body;
+      }
+
+      this.paramResult = _.cloneDeep(this[VALPARAMETERS]);
+      if (config.cover) {
+        this.params = _.cloneDeep(this[VALPARAMETERS].params);
+        this.request.query = _.cloneDeep(this[VALPARAMETERS].query);
+        this.request.body = _.cloneDeep(this[VALPARAMETERS].body);
+      }
     }
+    return { err: this.paramErrors, ret: this.paramResult };
   }
 }
