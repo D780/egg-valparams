@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = () => {
-  const config = {};
+  const config = { keys: 'testKeys' };
 
   config.security = {
     ctoken: false,
