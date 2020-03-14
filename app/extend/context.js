@@ -2,6 +2,7 @@
 'use strict';
 
 const _ = require('lodash');
+const cookie = require('cookie');
 
 // 源参数数据
 const ORIPARAMETERS = Symbol('Context#OriParameters');
@@ -15,6 +16,8 @@ module.exports = {
 /**
  * @typedef ParamsConfig
  * @type {Object}
+ * @property {'headers'|'cookies'|'signedCookies'|'params'|'query'|'body'}  [from] 来源，
+ *                                                                                 如果存在 alias | key 同名的情况下，需要用该参数来确定区别来源
  * @property {string}  [alias] 参数别名，定义该值，前端就用该值传参数来而不是pname
  * @property {string}  type    参数类型
  * @property {boolean} [required] 参数是否必选
@@ -28,6 +31,7 @@ module.exports = {
  * @property {boolean} [trim]          是否去掉参数前后空格字符，默认false
  * @property {boolean} [allowEmptyStr] 是否允许空串变量 默认不允许， 即 XXXX?YYY= 这种路由 YYY这个参数是否接受
  * @property {boolean} [allowNull] 是否允许 Null 值变量 默认不允许，开启时 传递 x=null 或 x='null' 时，可以跳过类型检查，将 null 值直接赋予 x 参数
+ * @property {boolean} [signed] from=cookies 用，cookie 是否已签名加密，此时也等价于 from=signedCookies
  * @property {string}  [desc] 参数描述 用于出错返回的提示
  */
 
@@ -36,8 +40,8 @@ module.exports = {
  * ###配置参数格式并进行检测
  * rules 和 options 查阅 valparams 相关文档说明
  *
- * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
- *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} rules 参数配置  {@link ParamsConfig}
+ * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
+ *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, signed:boolean, desc:string}>} rules 参数配置  {@link ParamsConfig}
  * @param {Object}  options 参数之间关系配置
  * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
  * @param {string[]} options.choices[].fields 涉及的参数
@@ -52,17 +56,24 @@ module.exports = {
  * @param {string}   options.cases.when[] 涉及的参数，（字符串）只要接收到的参数有这个字段即为真
  * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
  * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
- * @param {Object} [data] - 参数信息 默认使用请求的 params，query，body 数据如下，有需要可以自行设置
+ * @param {Object} [data] - 参数信息 默认使用请求上下文的 method、params，query，body、headers、cookies、signedCookies 数据如下，有需要可以自行设置
  *                        {
- *                          params: this.params,
- *                          query : this.request.query,
- *                          body  : this.request.body
+ *                          method       : this.method,
+ *                          params       : this.params,
+ *                          query        : this.request.query,
+ *                          body         : this.request.body,
+ *                          headers      : this.headers,
+ *                          cookies      : this.cookies.get(XXX, { signed: false }),
+ *                          signedCookies: this.cookies.get(XXX),
  *                        }
+ * @param {Object} [data.method] 请求方法
  * @param {Object} [data.params] params 参数
  * @param {Object} [data.query]  query 参数
  * @param {Object} [data.body]   body 参数
+ * @param {Object} [data.headers]       headers 参数
+ * @param {Object} [data.cookies]       cookies 参数
  *
- * @returns {Object} { err, ret: { params, query, body } }
+ * @returns {Object} { err, ret: { params, query, body, headers, cookies, signedCookies } }
  *
  * @this Egg.Context
  */
@@ -71,18 +82,39 @@ function validate(rules, options, data) {
   const config = app.config.valparams;
   options = options || {};
   if (_.isUndefined(this[ORIPARAMETERS])) {
+    const cookies = {};
+    const signedCookies = {};
+    if (this.headers && this.headers.cookie) {
+      const allCookies = cookie.parse(this.headers.cookie);
+      _.map(allCookies, (cval, ckey) => {
+        if (!(/\.sig$/.test(ckey))) {
+          const sigKey = `${ckey}.sig`;
+          if (allCookies[sigKey]) {
+            signedCookies[ckey] = this.cookies.get(ckey);
+          } else {
+            cookies[ckey] = this.cookies.get(ckey, { signed: false });
+          }
+        }
+      });
+    }
     this[ORIPARAMETERS] = {
-      params: this.params,
-      query : this.request.query,
-      body  : this.request.body,
+      params : this.params,
+      query  : this.request.query,
+      body   : this.request.body,
+      headers: this.headers,
+      cookies,
+      signedCookies,
     };
   }
   data = data || {
-    params: this[ORIPARAMETERS].params,
-    query : this[ORIPARAMETERS].query,
-    body  : this[ORIPARAMETERS].body,
+    params       : this[ORIPARAMETERS].params,
+    query        : this[ORIPARAMETERS].query,
+    body         : this[ORIPARAMETERS].body,
+    headers      : this[ORIPARAMETERS].headers,
+    cookies      : this[ORIPARAMETERS].cookies,
+    signedCookies: this[ORIPARAMETERS].signedCookies,
   };
-  // data.method = this.method || 'GET';
+  data.method = this.method || 'GET';
   if (rules) {
     // 如果全局配置 allowEmptyStr，则对所有没有配置 allowEmptyStr 的参数加上 allowEmptyStr 属性
     if (!_.isUndefined(config.allowEmptyStr)) {
@@ -114,23 +146,33 @@ function validate(rules, options, data) {
       // pass
       if (_.isUndefined(this[VALPARAMETERS])) {
         this[VALPARAMETERS] = {
-          params: {},
-          query : {},
-          body  : {},
+          params       : {},
+          query        : {},
+          body         : {},
+          headers      : {},
+          cookies      : {},
+          signedCookies: {},
         };
       }
       if (config.allowMultiCall) {
         _.assign(this[VALPARAMETERS].params, validater.ret.params);
         _.assign(this[VALPARAMETERS].query, validater.ret.query);
         _.assign(this[VALPARAMETERS].body, validater.ret.body);
+        _.assign(this[VALPARAMETERS].headers, validater.ret.headers);
+        _.assign(this[VALPARAMETERS].cookies, validater.ret.cookies);
+        _.assign(this[VALPARAMETERS].signedCookies, validater.ret.signedCookies);
       } else {
         this[VALPARAMETERS].params = validater.ret.params;
         this[VALPARAMETERS].query = validater.ret.query;
         this[VALPARAMETERS].body = validater.ret.body;
+        this[VALPARAMETERS].headers = validater.ret.headers;
+        this[VALPARAMETERS].cookies = validater.ret.cookies;
+        this[VALPARAMETERS].signedCookies = validater.ret.signedCookies;
       }
 
       this.paramResult = _.cloneDeep(this[VALPARAMETERS]);
       if (config.cover) {
+        // headers cookies signedCookies 不进行覆盖
         this.params = _.cloneDeep(this[VALPARAMETERS].params);
         this.request.query = _.cloneDeep(this[VALPARAMETERS].query);
         this.request.body = _.cloneDeep(this[VALPARAMETERS].body);

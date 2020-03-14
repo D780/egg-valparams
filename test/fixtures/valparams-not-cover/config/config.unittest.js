@@ -10,6 +10,7 @@ module.exports = () => {
 
   config.valparams = {
     locale: 'zh-cn',
+    cover : false,
   };
 
   return config;

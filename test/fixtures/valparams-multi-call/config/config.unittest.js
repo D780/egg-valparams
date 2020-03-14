@@ -9,7 +9,8 @@ module.exports = () => {
   };
 
   config.valparams = {
-    locale: 'zh-cn',
+    locale        : 'zh-cn',
+    allowMultiCall: true,
   };
 
   return config;

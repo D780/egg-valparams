@@ -1,6 +1,6 @@
 {
   "name": "egg-valparams",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "web 参数验证工具 For egg",
   "eggPlugin": {
     "name": "valparams"
@@ -17,7 +17,8 @@
     "express"
   ],
   "dependencies": {
-    "valparams": "^3.11.0"
+    "cookie": "^0.4.0",
+    "valparams": "^3.13.0"
   },
   "devDependencies": {
     "autod": "^3.1.0",

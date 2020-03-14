@@ -32,6 +32,16 @@ module.exports = app => {
 
       ctx.body = _.assign({}, query, body);
     }
+
+    async testheadersCookies() {
+      const { ctx } = this;
+      const valparams =  ctx.validate({
+        testheader      : { from: 'headers', type: 'string' },
+        testcookie      : { from: 'cookies', type: 'string' },
+        testSignedCookie: { from: 'cookies', type: 'string', signed: true },
+      });
+      ctx.body = valparams.ret;
+    }
   }
   return userController;
 };

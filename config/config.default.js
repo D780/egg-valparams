@@ -7,6 +7,7 @@ module.exports = () => {
 
   config.valparams = {
     // locale: 'zh-cn',
+    // 是否覆盖上下文对象（不包含 headers、cookies、signedCookies）
     cover         : true,
     allowMultiCall: true,
     throwError    : true,

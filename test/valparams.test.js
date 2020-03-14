@@ -105,5 +105,29 @@ describe('test/valparams.test.js', () => {
         })
         .expect(200);
     });
+
+    it('should pass headers and cookies', () => {
+      const now = Date.now();
+      return app.httpRequest()
+        .get('/test2.json')
+        .set('cookie', 'testcookie=test;testSignedCookie=ttt;testSignedCookie.sig=uDxEDVrItM80x4ayMfI_zzUYylvSP-geE4httvZkJS0')
+        .set('testHeader', 'test')
+        .type('json')
+        .expect({
+          body   : {},
+          params : {},
+          query  : {},
+          headers: {
+            testheader: 'test',
+          },
+          cookies: {
+            testcookie: 'test',
+          },
+          signedCookies: {
+            testSignedCookie: 'ttt',
+          },
+        })
+        .expect(200);
+    });
   });
 });
