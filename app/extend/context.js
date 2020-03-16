@@ -174,8 +174,9 @@ function validate(rules, options, data) {
       if (config.cover) {
         // headers cookies signedCookies 不进行覆盖
         this.params = this.paramResult.params;
-        this.request.query = _.assign(this.request.query, this[VALPARAMETERS].query);
+        this.request.query = this.paramResult.query;
         this.request.body = this.paramResult.body;
+        _.assign(this.request.query, this.paramResult.query);
       }
     }
     return { err: this.paramErrors, ret: this.paramResult };
