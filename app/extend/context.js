@@ -173,9 +173,9 @@ function validate(rules, options, data) {
       this.paramResult = _.cloneDeep(this[VALPARAMETERS]);
       if (config.cover) {
         // headers cookies signedCookies 不进行覆盖
-        this.params = _.cloneDeep(this[VALPARAMETERS].params);
-        this.request.query = _.cloneDeep(this[VALPARAMETERS].query);
-        this.request.body = _.cloneDeep(this[VALPARAMETERS].body);
+        this.params = this.paramResult.params;
+        this.request.query = _.assign(this.request.query, this[VALPARAMETERS].query);
+        this.request.body = this.paramResult.body;
       }
     }
     return { err: this.paramErrors, ret: this.paramResult };

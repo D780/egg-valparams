@@ -3,7 +3,7 @@
 const mm     = require('egg-mock');
 const assert = require('assert');
 
-describe('test/valparams.not.cover.test.js', () => {
+describe('test/valparams.multi.call.test.js', () => {
   let app;
   before(() => {
     app = mm.app({

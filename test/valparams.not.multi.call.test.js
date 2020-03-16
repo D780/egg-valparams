@@ -3,7 +3,7 @@
 const mm     = require('egg-mock');
 const assert = require('assert');
 
-describe('test/valparams.not.cover.test.js', () => {
+describe('test/valparams.not.multi.call.test.js', () => {
   let app;
   before(() => {
     app = mm.app({
@@ -15,7 +15,7 @@ describe('test/valparams.not.cover.test.js', () => {
   after(() => app.close());
 
   describe('post', () => {
-    it('should pass and result is increment', () => {
+    it('should pass', () => {
       return app.httpRequest()
         .post('/test.json')
         .type('json')
