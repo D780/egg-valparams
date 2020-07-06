@@ -52,7 +52,8 @@ declare module 'egg' {
      * @this Egg.Context
      */
     validate(rules: _Valparams.TParamConfig, options: _Valparams.TRelationOptions, data: _Valparams.TRequest): void;
-    paramErrors: _Valparams.TErrorInfo[];
+    paramErrors: null|_Valparams.TErrorInfo[];
+    paramResult: Omit<_Valparams.TValparams, 'all'|'raw'>;
   }
 
   // 扩展你的配置

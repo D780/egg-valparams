@@ -114,12 +114,14 @@ function validate(rules, options, data) {
     cookies      : this[ORIPARAMETERS].cookies,
     signedCookies: this[ORIPARAMETERS].signedCookies,
   };
-  data.method = this.method || 'GET';
+  data.method = this.method || /* istanbul ignore next */ 'GET';
   if (rules) {
     // 如果全局配置 allowEmptyStr，则对所有没有配置 allowEmptyStr 的参数加上 allowEmptyStr 属性
+    /* istanbul ignore else */
     if (!_.isUndefined(config.allowEmptyStr)) {
       const allowEmptyStr = Boolean(config.allowEmptyStr);
       _.map(rules, rule => {
+        /* istanbul ignore else */
         if (_.isUndefined(rule.allowEmptyStr)) {
           rule.allowEmptyStr = allowEmptyStr;
         }
