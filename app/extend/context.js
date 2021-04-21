@@ -81,30 +81,38 @@ function validate(rules, options, data) {
   const app = this.app;
   const config = app.config.valparams;
   options = options || {};
-  if (_.isUndefined(this[ORIPARAMETERS])) {
-    const cookies = {};
-    const signedCookies = {};
-    if (this.headers && this.headers.cookie) {
-      const allCookies = cookie.parse(this.headers.cookie);
-      _.map(allCookies, (cval, ckey) => {
-        if (!(/\.sig$/.test(ckey))) {
-          const sigKey = `${ckey}.sig`;
-          if (allCookies[sigKey]) {
-            signedCookies[ckey] = this.cookies.get(ckey);
-          } else {
-            cookies[ckey] = this.cookies.get(ckey, { signed: false });
+  if (_.isUndefined(this[ORIPARAMETERS]) || this.routerPath !== this[ORIPARAMETERS].routerPath) {
+    if (_.isUndefined(this[ORIPARAMETERS])) {
+      const cookies = {};
+      const signedCookies = {};
+      if (this.headers && this.headers.cookie) {
+        const allCookies = cookie.parse(this.headers.cookie);
+        _.map(allCookies, (cval, ckey) => {
+          if (!(/\.sig$/.test(ckey))) {
+            const sigKey = `${ckey}.sig`;
+            if (allCookies[sigKey]) {
+              signedCookies[ckey] = this.cookies.get(ckey);
+            } else {
+              cookies[ckey] = this.cookies.get(ckey, { signed: false });
+            }
           }
-        }
-      });
+        });
+      }
+      // params 参数与路由息息相关，在路由变动时亦需更新 params 的值，此处需要记录 route 以便判断是否需要进行更新
+      this[ORIPARAMETERS] = {
+        routerPath: this.routerPath,
+        params    : this.params,
+        query     : this.request.query,
+        body      : this.request.body,
+        headers   : this.headers,
+        cookies,
+        signedCookies,
+      };
+    } else {
+      // 更新 routerPath 和 params
+      this[ORIPARAMETERS].routerPath = this.routerPath;
+      this[ORIPARAMETERS].params = this.params;
     }
-    this[ORIPARAMETERS] = {
-      params : this.params,
-      query  : this.request.query,
-      body   : this.request.body,
-      headers: this.headers,
-      cookies,
-      signedCookies,
-    };
   }
   data = data || {
     params       : this[ORIPARAMETERS].params,
@@ -178,7 +186,9 @@ function validate(rules, options, data) {
         this.params = this.paramResult.params;
         this.request.query = this.paramResult.query;
         this.request.body = this.paramResult.body;
-        _.assign(this.request.query, this.paramResult.query);
+        // _.assign(this.params, this.paramResult.params);
+        // _.assign(this.request.query, this.paramResult.query);
+        // _.assign(this.request.body, this.paramResult.body);
       }
     }
     return { err: this.paramErrors, ret: this.paramResult };

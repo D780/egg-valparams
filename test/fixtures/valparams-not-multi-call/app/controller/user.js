@@ -15,15 +15,18 @@ module.exports = app => {
     async test() {
       const { ctx } = this;
       const ret = {};
+      ret.middlewareRet_1 = ctx.middlewareRet_1;
+      ret.middlewareRet0 = ctx.middlewareRet0;
       ctx.validate({
+        p1  : { type: 'int', required: true },
         test: { type: 'int', required: false },
       });
-      ret.firstRet = _.cloneDeep(ctx.request.body);
+      ret.firstRet = { ..._.cloneDeep(ctx.params), ..._.cloneDeep(ctx.request.body) };
 
       ctx.validate({
         test2: { type: 'int', required: false },
       });
-      ret.secondRet = _.cloneDeep(ctx.request.body);
+      ret.secondRet = { ..._.cloneDeep(ctx.params), ..._.cloneDeep(ctx.request.body) };
 
       ctx.validate({
         test3: { type: 'int', required: false },
@@ -33,7 +36,7 @@ module.exports = app => {
           test3: '9999',
         },
       });
-      ret.thirdRet = _.cloneDeep(ctx.request.body);
+      ret.thirdRet = { ..._.cloneDeep(ctx.params), ..._.cloneDeep(ctx.request.body) };
 
       ctx.body = ret;
     }

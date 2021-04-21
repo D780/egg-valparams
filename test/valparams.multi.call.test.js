@@ -17,24 +17,42 @@ describe('test/valparams.multi.call.test.js', () => {
   describe('post', () => {
     it('should pass and result is increment', () => {
       return app.httpRequest()
-        .post('/test.json')
+        .post('/666/test.json')
         .type('json')
         .send({
-          test : '123456',
-          test2: '789',
+          test_1: '4869',
+          test0 : '556',
+          test  : '123456',
+          test2 : '789',
         })
         .expect({
+          middlewareRet_1: {
+            test_1: 4869,
+          },
+          middlewareRet0: {
+            test_1: 4869,
+            test0 : 556,
+          },
           firstRet: {
-            test: 123456,
+            test_1: 4869,
+            test0 : 556,
+            p1    : 666,
+            test  : 123456,
           },
           secondRet: {
-            test : 123456,
-            test2: 789,
+            test_1: 4869,
+            test0 : 556,
+            p1    : 666,
+            test  : 123456,
+            test2 : 789,
           },
           thirdRet: {
-            test : 123456,
-            test2: 789,
-            test3: 9999,
+            test_1: 4869,
+            test0 : 556,
+            p1    : 666,
+            test  : 123456,
+            test2 : 789,
+            test3 : 9999,
           },
         })
         .expect(200);

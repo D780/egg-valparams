@@ -1,6 +1,6 @@
 {
   "name": "egg-valparams",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "web 参数验证工具 For egg",
   "eggPlugin": {
     "name": "valparams"
