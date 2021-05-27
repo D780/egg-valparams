@@ -186,9 +186,9 @@ function validate(rules, options, data) {
         this.params = this.paramResult.params;
         this.request.query = this.paramResult.query;
         this.request.body = this.paramResult.body;
-        // _.assign(this.params, this.paramResult.params);
-        // _.assign(this.request.query, this.paramResult.query);
-        // _.assign(this.request.body, this.paramResult.body);
+        _.assign(this.params, this.paramResult.params);
+        _.assign(this.request.query, this.paramResult.query);
+        _.assign(this.request.body, this.paramResult.body);
       }
     }
     return { err: this.paramErrors, ret: this.paramResult };
